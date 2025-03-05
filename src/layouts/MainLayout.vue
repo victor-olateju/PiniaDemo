@@ -63,6 +63,12 @@ const linksList = [
     link: '/'
   },
   {
+    title: 'Home Entries Store',
+    caption: 'Home Page Store',
+    icon: 'chevron_right',
+    link: '/entry'
+  },
+  {
     title: 'Page Entries',
     caption: 'Entries Page',
     icon: 'chevron_right',
