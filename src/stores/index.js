@@ -1,6 +1,6 @@
 import { defineStore } from '#q-app/wrappers'
 import { createPinia } from 'pinia'
-import { useEntriesStore } from './entries-store'
+// import { useEntriesStore } from './entries-store'
 
 /*
  * If not building with SSR mode, you can
@@ -16,7 +16,7 @@ export default defineStore((/* { ssrContext } */) => {
 
   // You can add Pinia plugins here
   // pinia.use(SomePiniaPlugin)
-  pinia.use(useEntriesStore)
+  // pinia.use(useEntriesStore)
 
   return pinia
 })

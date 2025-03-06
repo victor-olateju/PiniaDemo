@@ -6,7 +6,8 @@ const routes = [
       { path: '', component: () => import('src/pages/IndexPage.vue') },
       { path: 'entry', component: () => import('src/pages/PageEntrySt.vue') },
       { path: 'entries', component: () => import('pages/PageEntries.vue') },
-      { path: 'settings', component: () => import('pages/PageSettings.vue') }
+      { path: 'settings', component: () => import('pages/PageSettings.vue') },
+      { path: 'dynamic', component: () => import('pages/DynamicPage.vue') }
     ]
   },
 

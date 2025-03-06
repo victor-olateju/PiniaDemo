@@ -79,6 +79,12 @@ const linksList = [
     caption: 'Settings Page',
     icon: 'chevron_right',
     link: '/settings'
+  },
+  {
+    title: 'Dynamic Page',
+    caption: 'Settings Page',
+    icon: 'chevron_right',
+    link: '/dynamic'
   }
 ]
 

@@ -7,22 +7,29 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0",
+    "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
-    "postinstall": "quasar prepare"
+    "postinstall": "quasar prepare",
+    "test:unit": "vitest",
+    "test:unit:ci": "vitest run"
   },
   "dependencies": {
-    "pinia": "^3.0.1",
     "@quasar/extras": "^1.16.4",
+    "pinia": "^3.0.1",
     "quasar": "^2.16.0",
     "vue": "^3.4.18",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
     "@quasar/app-vite": "^2.1.0",
+    "@quasar/quasar-app-extension-testing-unit-vitest": "^1.1.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/test-utils": "^2.4.4",
     "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.14"
+    "jsdom": "^26.0.0",
+    "postcss": "^8.4.14",
+    "vitest": "^2.0.5"
   },
   "engines": {
     "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",

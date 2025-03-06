@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { Notify } from "quasar";
-import e from "express";
+import { defineStore } from "pinia";
+
 // import { api } from "src/boot/axios";
 const entriesData = [
   {
@@ -69,11 +70,85 @@ const api = {
   },
   addItem: async (url, data) => {
     await entriesData.push(data);
-    return entriesData
-  }
+    return entriesData;
+  },
 };
 
-export function useEntriesStore(context) {
+// function EntriesStore() {
+//   const entries = ref([]);
+//   const singleEntry = ref({});
+//   const loading = ref(false);
+
+//   function handleApiError(error) {
+//     console.error(error);
+//     Notify.create({
+//       type: "negative",
+//       message: "An error occurred. Please try again later." + error,
+//     });
+//   }
+
+//   function handleApiSuccess(message) {
+//     Notify.create({
+//       type: "positive",
+//       message: message,
+//     });
+//   }
+
+//   function handleApiResponse(response) {
+//     return new Promise((resolve, reject) => {
+//       if (response.status) {
+//         resolve(response);
+//       } else {
+//         reject(response);
+//       }
+//     });
+//   }
+
+//   function getItem(url = "url") {
+//     loading.value = true;
+//     const data = api.get(url);
+//     //   .then(async (response) => {
+//     //     await handleApiResponse(response);
+//     //     console.log(response.data);
+//     //     singleEntry.value = response.data;
+//     //   })
+//     //   .catch((error) => {
+//     //     handleApiError(error);
+//     //   })
+//     //   .finally(() => {
+//     //     loading.value = false;
+//     //   });
+//   }
+
+//   function getCollection(url = "url") {
+//     loading.value = true;
+//     const data = api.get(url);
+
+//     return data;
+//     //   .then(async (response) => {
+//     //     await handleApiResponse(response);
+//     //     console.log(response.data);
+//     //     entries.value = response.data;
+//     //   })
+//     //   .catch((error) => {
+//     //     handleApiError(error);
+//     //   })
+//     //   .finally(() => {
+//     //     loading.value = false;
+//     //   });
+//   }
+
+//   return {
+//     entries,
+//     singleEntry,
+//     loading,
+
+//     getItem,
+//     getCollection,
+//   };
+// }
+
+export const useEntriesStore = defineStore("entries", () => {
   const entries = ref([]);
   const singleEntry = ref({});
   const loading = ref(false);
@@ -105,26 +180,25 @@ export function useEntriesStore(context) {
 
   function getItem(url = "url") {
     loading.value = true;
-    const data = api.get(url)
-    //   .then(async (response) => {
-    //     await handleApiResponse(response);
-    //     console.log(response.data);
-    //     singleEntry.value = response.data;
-    //   })
-    //   .catch((error) => {
-    //     handleApiError(error);
-    //   })
-    //   .finally(() => {
-    //     loading.value = false;
-    //   });
+    const data = api.getItem(url)
+      .then(async (response) => {
+        await handleApiResponse(response);
+        console.log(response.data);
+        singleEntry.value = response.data;
+      })
+      .catch((error) => {
+        handleApiError(error);
+      })
+      .finally(() => {
+        loading.value = false;
+      });
   }
 
   function getCollection(url = "url") {
     loading.value = true;
-    const data = api
-      .get(url)
-    
-      return data
+    const data = api.get(url);
+
+    return data;
     //   .then(async (response) => {
     //     await handleApiResponse(response);
     //     console.log(response.data);
@@ -146,6 +220,4 @@ export function useEntriesStore(context) {
     getItem,
     getCollection,
   };
-}
-
-// export const useEntriesStore = defineStore('entries', () => EntriesStore("entries"))
+});

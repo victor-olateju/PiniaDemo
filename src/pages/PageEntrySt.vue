@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-md">
     PAGHE STEORE
-    <!-- <q-list bordered separator class="rounded-borders">
+  <q-list bordered separator class="rounded-borders">
       <q-slide-item @left="onEntrySlideLeft({...$event, id: entry.id})" @right="onEntrySlideRight({...$event, id: entry.id})" v-for="entry in entriesStore.entries" :key="entry.title">
         <template v-slot:left>
           <q-icon name="delete" class="text-white" />
@@ -28,7 +28,7 @@
           </q-item-section>
         </q-item>
       </q-slide-item>
-    </q-list> -->
+    </q-list> 
     </div>  
 </template>
 
@@ -38,5 +38,5 @@
 //   import { useCurrencify } from 'src/use/useCurrencify';
   console.log("PageEntrySt")
   const entriesStore = useEntriesStore();
-  // console.log(entriesStore)
+  console.log(entriesStore.getItem())
 </script>
