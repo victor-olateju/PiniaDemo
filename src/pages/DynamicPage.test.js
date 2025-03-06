@@ -21,21 +21,7 @@ describe('DynamicPage.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(DynamicPage, {
-      global: {
-        plugins: [Quasar],
-        components: {
-            QIcon,
-            QInput,
-            QList
-        },
-        // mocks: {
-        //   $q: {
-        //     notify: vi.fn(),
-        //   },
-        // },
-      },
-    });
+    wrapper = mount(DynamicPage, {});
   });
 
   it('renders search input', () => {
@@ -46,31 +32,52 @@ describe('DynamicPage.vue', () => {
   it('filters tasks based on search input', async () => {
     const searchInput = wrapper.find('[data-testid="search-input"]');
     await searchInput.setValue('task 1');
+
     expect(wrapper.vm.filteredTasks).toEqual(
       TASK_COLLECTION.filter((task) => task.title.toLowerCase().includes('task 1'))
     );
   });
 
-//   it('renders task items', () => {
-//     const taskItems = wrapper.findAllComponents({ name: 'q-item' });
-//     expect(taskItems.length).toBe(TASK_COLLECTION.length);
-//   });
+  it('test search input debounce', async () => {
+    const searchInput = wrapper.find('[data-testid="search-input"]');
+    await searchInput.setValue('task 1');
 
-//   it('fetches elements on button click', async () => {
-//     const taskButton = wrapper.findAllComponents({ name: 'q-btn' }).at(0);
-//     await taskButton.trigger('click');
-//     expect(wrapper.vm.fetched).toEqual(TASK_ITEMs.filter((item) => item.id === TASK_COLLECTION[0].id));
-//   });
+    setTimeout(async () => {    
+        await searchInput.setValue('task 2')
+    }, 500);
 
-//   it('validates form fields correctly', async () => {
+    const start = Date.now();
+    await new Promise((resolve) => setTimeout(resolve, 300)); // wait for debounce time + buffer
+    const end = Date.now();
+    expect(end - start).toBeLessThan(500);
+
+    expect(wrapper.vm.filteredTasks).toEqual(
+      TASK_COLLECTION.filter((task) => task.title.toLowerCase().includes('task 1'))
+    );
+  });
+
+  it('renders task items', () => {
+    const taskItems = wrapper.findAllComponents({ name: 'q-item' });
+    expect(taskItems.length).toBe(TASK_COLLECTION.length);
+  });
+
+  it('fetches elements on button click', async () => {
+    const taskButton = wrapper.findAllComponents({ name: 'q-btn' }).at(0);
+    await taskButton.trigger('click');
+    expect(wrapper.vm.fetched).toEqual(TASK_ITEMs.filter((item) => item.id === TASK_COLLECTION[0].id));
+  });
+
+// it('validates form fields correctly', async () => {
 //     const formData = {
-//       field1: 'test',
-//       field2: 'test',
+//         field1: 'test',
+//         field2: 'test',
 //     };
 //     wrapper.vm.formData = formData;
 //     await wrapper.vm.$nextTick();
-//     expect(wrapper.vm.canSubmit).toBe(true);
-//   });
+//     console.log("FRET ", wrapper.vm.canSubmit);
+
+//     // expect(wrapper.vm.canSubmit).toBe(true);
+// });
 
 //   it('submits form data', async () => {
 //     const formData = {
