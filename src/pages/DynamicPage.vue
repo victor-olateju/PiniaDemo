@@ -112,6 +112,22 @@ const validateTextField = ({ maxLength, minLength, optional }) => {
   ];
 };
 
+/**
+ * Watches the `formData` object for changes and updates the `canSubmit` value.
+ * 
+ * The watcher function iterates over each key in the `formData` object and performs the following:
+ * - Finds the corresponding field in the `TASK_ITEMs` array.
+ * - Retrieves the validation rules for the field.
+ * - Validates the field value using the retrieved rules.
+ * 
+ * If all fields pass their respective validation rules, `canSubmit` is set to `true`.
+ * 
+ * @param {Object} formData - The form data object being watched.
+ * @param {Object} newVal - The new value of the form data object after changes.
+ * @param {Object} canSubmit - A reactive reference indicating whether the form can be submitted.
+ * @param {Array} TASK_ITEMs - An array of task items containing field definitions and validation rules.
+ * @param {Function} validateTextField - A function that returns validation rules for a given field.
+ */
 watch(formData, (newVal) => {
   canSubmit.value = Object.keys(newVal).every((key) => {
     const field = TASK_ITEMs.find(item => item.fields.some(f => f.name === key)).fields.find(f => f.name === key);
@@ -120,6 +136,19 @@ watch(formData, (newVal) => {
   });
 }, { deep: true });
 
+
+/**
+ * Handles the form submission process.
+ * 
+ * This function sets the `isSubmitting` flag to true, logs the form data,
+ * simulates a delay of 2 seconds to mimic an asynchronous operation, and
+ * then resets the `isSubmitting` flag to false. If an error occurs during
+ * the process, it logs the error to the console.
+ * 
+ * @async
+ * @function onSubmit
+ * @returns {Promise<void>} A promise that resolves when the submission process is complete.
+ */
 const onSubmit = async () => {
   isSubmitting.value = true;
   try {

@@ -21,7 +21,7 @@ describe('DynamicPage.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(DynamicPage, {});
+    wrapper = mount(DynamicPage);
   });
 
   it('renders search input', () => {
